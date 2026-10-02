@@ -1,0 +1,57 @@
+[Version]
+Signature   = "$WINDOWS NT$"
+Class       = Extension
+ClassGuid   = {e2f84ce7-8efa-411c-aa69-97454ca4cb57}
+Provider    = %ProviderName%
+ExtensionId = {AD96C54B-C7BA-4A51-9211-D77984F6D736}
+CatalogFile = R2Fix.cat
+PnpLockdown = 1
+
+[Manufacturer]
+%ProviderName% = R2Models,NTamd64.10.0...18362
+
+[R2Models.NTamd64.10.0...18362]
+%R2Fix.DeviceDesc% = R2Fix_Install, BTHLEDevice\{00001812-0000-1000-8000-00805f9b34fb}_Dev_VID&021915_PID&eeee_REV&0001
+
+[R2Fix_Install.NT]
+CopyFiles = R2Fix.CopyFiles
+
+[R2Fix_Install.NT.HW]
+AddReg = R2Fix_LowerFilter
+
+[R2Fix_LowerFilter]
+HKR,,"LowerFilters",0x00010008,"R2Fix"
+
+[R2Fix_Install.NT.Services]
+AddService = R2Fix,,R2Fix_Service
+
+[R2Fix_Service]
+DisplayName   = %R2Fix.ServiceDesc%
+ServiceType   = 1
+StartType     = 3
+ErrorControl  = 1
+ServiceBinary = %13%\R2Fix.sys
+
+[R2Fix_Install.NT.Wdf]
+KmdfService = R2Fix,R2Fix_Wdf
+
+[R2Fix_Wdf]
+KmdfLibraryVersion = $KMDFVERSION$
+
+[DestinationDirs]
+R2Fix.CopyFiles = 13
+
+[R2Fix.CopyFiles]
+R2Fix.sys
+
+[SourceDisksFiles]
+R2Fix.sys = 1
+
+[SourceDisksNames]
+1 = %DiskName%,,,
+
+[Strings]
+ProviderName      = "R2Fix"
+R2Fix.DeviceDesc  = "R2 Bluetooth Remote HID Fix"
+R2Fix.ServiceDesc = "R2 Bluetooth HID Descriptor Filter"
+DiskName          = "R2Fix Installation Disk"
